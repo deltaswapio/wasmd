@@ -26,11 +26,19 @@ func NewHandler(k types.ContractOpsKeeper) sdk.Handler {
 		)
 		switch msg := msg.(type) {
 		case *MsgStoreCode: //nolint:typecheck
-			res, err = msgServer.StoreCode(sdk.WrapSDKContext(ctx), msg)
+			// Disabling to remove DoS possibility
+			// res, err = msgServer.StoreCode(sdk.WrapSDKContext(ctx), msg)
+			err = sdkerrors.Wrapf(sdkerrors.ErrNotSupported, "must use x/wormhole")
 		case *MsgInstantiateContract:
+<<<<<<< HEAD
 			res, err = msgServer.InstantiateContract(sdk.WrapSDKContext(ctx), msg)
 		case *MsgInstantiateContract2:
 			res, err = msgServer.InstantiateContract2(sdk.WrapSDKContext(ctx), msg)
+=======
+			// Disabling to remove DoS possibility
+			// res, err = msgServer.InstantiateContract(sdk.WrapSDKContext(ctx), msg)
+			err = sdkerrors.Wrapf(sdkerrors.ErrNotSupported, "must use x/wormhole")
+>>>>>>> 94ec3e60... prevent normal requests from instantiating or uploading contracts
 		case *MsgExecuteContract:
 			res, err = msgServer.ExecuteContract(sdk.WrapSDKContext(ctx), msg)
 		case *MsgMigrateContract:
